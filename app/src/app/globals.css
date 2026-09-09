@@ -126,6 +126,44 @@
     animation: pws-modal-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
   }
 
+  /* --- Notification banner ticker --- */
+
+  /* Seamless marquee: content duplicated, track slides one copy-width. */
+  @keyframes pws-ticker {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .banner-ticker {
+    animation: pws-ticker 22s linear infinite;
+    will-change: transform;
+  }
+
+  .banner-ticker:hover {
+    animation-play-state: paused;
+  }
+
+  /* Pulsing dot — the announcement is live, not archive. */
+  @keyframes pws-pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(0.8);
+    }
+  }
+
+  .banner-pulse {
+    animation: pws-pulse 1.8s ease-in-out infinite;
+  }
+
   /* Small sage wayfinding label. Sentence case — never shout. */
   .eyebrow {
     @apply mb-4 flex items-center gap-3 text-sm font-semibold text-pws-sage;
