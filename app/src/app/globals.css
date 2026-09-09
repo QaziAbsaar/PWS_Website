@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --pws-green: #006400;
+  --pws-sage: #4f9856;
+  --pws-teal: #006c43;
+  --off-white: #f2f4f2;
+  --charcoal: #222222;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-charcoal antialiased;
+    font-size: 17px;
+    font-feature-settings: "kern";
+  }
+
+  ::selection {
+    @apply bg-pws-sage/25;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-6 sm:px-8;
+  }
+
+  /* Small sage wayfinding label. Sentence case — never shout. */
+  .eyebrow {
+    @apply mb-4 flex items-center gap-3 text-sm font-semibold text-pws-sage;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply inline-block h-px w-6 bg-current;
+  }
+
+  .on-dark .eyebrow {
+    @apply text-pws-sage;
+  }
+
+  .section {
+    @apply py-24 sm:py-32;
+  }
+
+  .section-alt {
+    @apply bg-off-white;
+  }
+
+  .h-display {
+    @apply font-display tracking-tight leading-[1.06];
+  }
+
+  .prose-lede {
+    @apply max-w-xl text-lg leading-relaxed text-charcoal/70;
+  }
+
+  /* Static content sits on rules, not in boxes. */
+  .rule-item {
+    @apply border-t border-line pt-8;
+  }
+}
