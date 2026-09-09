@@ -8,7 +8,7 @@ const FIELDS: FieldSpec[] = [
   { name: "title", label: "Title", type: "text", placeholder: "Winter blanket drive" },
   { name: "date", label: "Date", type: "date" },
   { name: "location", label: "Location", type: "text", placeholder: "Main campus" },
-  { name: "image_path", label: "Image path (media bucket)", type: "text", placeholder: "events/drive.jpg" },
+  { name: "image_path", label: "Image", type: "upload", placeholder: "events/drive.jpg" },
   {
     name: "status",
     label: "Status",

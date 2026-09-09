@@ -9,7 +9,7 @@ import {
 import { CrudForm, NewItemPanel, type FieldSpec } from "./crud";
 
 const FIELDS: FieldSpec[] = [
-  { name: "storage_path", label: "Image path (media bucket)", type: "text", placeholder: "gallery/drive-1.jpg" },
+  { name: "storage_path", label: "Image", type: "upload", placeholder: "gallery/drive-1.jpg" },
   { name: "caption", label: "Caption", type: "text" },
   { name: "alt_text", label: "Alt text", type: "text", placeholder: "Students packing donation boxes" },
   { name: "sort_order", label: "Sort order", type: "number" },

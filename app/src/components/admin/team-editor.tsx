@@ -7,7 +7,7 @@ import { CrudForm, NewItemPanel, type FieldSpec } from "./crud";
 const FIELDS: FieldSpec[] = [
   { name: "name", label: "Name", type: "text", placeholder: "Hassan Vaqas Quraishi" },
   { name: "role", label: "Role", type: "text", placeholder: "President" },
-  { name: "photo_path", label: "Photo path (media bucket)", type: "text", placeholder: "team/president.jpg" },
+  { name: "photo_path", label: "Photo", type: "upload", placeholder: "team/president.jpg" },
   { name: "sort_order", label: "Sort order", type: "number" },
 ];
 

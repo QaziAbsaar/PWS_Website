@@ -7,6 +7,7 @@ import type { ActionResult, PopupPosterRow } from "@/types/database.types";
 import { deletePopup, savePopup } from "@/app/actions/admin";
 import { inputClass } from "@/components/forms/enquiry-form";
 import { NewItemPanel } from "@/components/admin/crud";
+import { MediaUploadField } from "@/components/admin/media-upload-field";
 
 const ACTIVE_OPTIONS = [
   { value: "no", label: "Inactive" },
@@ -92,19 +93,14 @@ function PosterForm({ poster }: { poster?: PopupPosterRow }) {
             htmlFor={`popup-path-${poster?.id ?? "new"}`}
             className="mb-1.5 block text-sm font-semibold text-charcoal/80"
           >
-            Poster image path
+            Poster image
           </label>
-          <input
+          <MediaUploadField
             id={`popup-path-${poster?.id ?? "new"}`}
-            placeholder="drive-poster.png"
             value={values.storage_path}
-            onChange={(event) => set("storage_path", event.target.value)}
-            className={inputClass(false)}
+            onChange={(path) => set("storage_path", path)}
+            onError={setMessage}
           />
-          <p className="mt-1.5 text-xs text-charcoal/50">
-            File name after uploading the poster to the “media” bucket in
-            Supabase Storage.
-          </p>
         </div>
 
         <div>

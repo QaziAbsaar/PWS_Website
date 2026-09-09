@@ -5,11 +5,12 @@ import { useState } from "react";
 import { Trash2 } from "lucide-react";
 import type { ActionResult } from "@/types/database.types";
 import { inputClass } from "@/components/forms/enquiry-form";
+import { MediaUploadField } from "@/components/admin/media-upload-field";
 
 export interface FieldSpec {
   name: string;
   label: string;
-  type: "text" | "textarea" | "number" | "select" | "date";
+  type: "text" | "textarea" | "number" | "select" | "date" | "upload";
   options?: { value: string; label: string }[];
   placeholder?: string;
 }
@@ -89,7 +90,11 @@ export function CrudForm({
         {fields.map((field) => (
           <div
             key={field.name}
-            className={field.type === "textarea" ? "sm:col-span-2" : ""}
+            className={
+              field.type === "textarea" || field.type === "upload"
+                ? "sm:col-span-2"
+                : ""
+            }
           >
             <label
               htmlFor={`field-${field.name}`}
@@ -97,7 +102,14 @@ export function CrudForm({
             >
               {field.label}
             </label>
-            {field.type === "textarea" ? (
+            {field.type === "upload" ? (
+              <MediaUploadField
+                id={`field-${field.name}`}
+                value={String(values[field.name] ?? "")}
+                onChange={(value) => set(field.name, value)}
+                onError={setMessage}
+              />
+            ) : field.type === "textarea" ? (
               <textarea
                 id={`field-${field.name}`}
                 rows={4}
