@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import type { GalleryImageRow } from "@/types/database";
+import type { GalleryImageRow } from "@/types/database.types";
 
 export async function getPublishedGallery(): Promise<GalleryImageRow[]> {
   const supabase = await createClient();

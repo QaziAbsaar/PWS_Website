@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { setSubmissionHandled } from "@/app/actions/admin";
-import type { SubmissionRow } from "@/types/database";
+import type { SubmissionRow } from "@/types/database.types";
 import { formatDate } from "@/lib/media";
 
 const FIELD_ORDER = [

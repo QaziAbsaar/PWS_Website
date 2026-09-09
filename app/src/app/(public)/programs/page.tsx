@@ -1,38 +1,13 @@
 import type { Metadata } from "next";
-import { Callout, PageHero } from "@/components/site/sections";
+import Link from "next/link";
+import { Callout, PageHero } from "@/components/public/sections";
+import { PROGRAMS } from "@/lib/data/programs";
 
 export const metadata: Metadata = {
   title: "Our work",
   description:
     "The focus areas of PAF-IAST Welfare Society: volunteering, awareness, giving, student support, partnerships, and leadership.",
 };
-
-const WORK = [
-  {
-    title: "Volunteer & outreach",
-    body: "Bring student volunteers into initiatives that serve people and communities with dignity, consistency, and care.",
-  },
-  {
-    title: "Awareness & advocacy",
-    body: "Use campaigns, conversations, and collaborations to make important social issues easier to understand and act on.",
-  },
-  {
-    title: "Giving initiatives",
-    body: "Support charitable events, donation drives, and fundraising activities around credible, relevant causes.",
-  },
-  {
-    title: "Student support",
-    body: "Help students find information and appropriate routes to academic, financial, and wellbeing support within the institute.",
-  },
-  {
-    title: "Community partners",
-    body: "Connect with organisations and university departments whose experience can make welfare efforts more useful and sustainable.",
-  },
-  {
-    title: "Student leadership",
-    body: "Create meaningful chances for students to organise, lead, make decisions, and learn through responsible service.",
-  },
-];
 
 const PRINCIPLES = [
   "Keep volunteers focused on a clear, useful task.",
@@ -62,15 +37,19 @@ export default function ProgramsPage() {
             A broad purpose. Thoughtful ways to contribute.
           </h2>
           <div className="grid gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {WORK.map((item) => (
-              <div key={item.title} className="rule-item">
-                <h2 className="font-display text-2xl font-bold tracking-tight">
-                  {item.title}
+            {PROGRAMS.map((program) => (
+              <Link
+                key={program.slug}
+                href={`/programs/${program.slug}`}
+                className="rule-item group no-underline"
+              >
+                <h2 className="font-display text-2xl font-bold tracking-tight transition-colors group-hover:text-pws-green">
+                  {program.title}
                 </h2>
                 <p className="mt-4 text-base leading-relaxed text-charcoal/70">
-                  {item.body}
+                  {program.summary}
                 </p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

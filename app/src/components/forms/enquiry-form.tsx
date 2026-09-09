@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { submitEnquiry } from "@/app/actions/public";
-import { enquirySchema, type EnquiryInput } from "@/lib/validation/schemas";
+import { enquirySchema, type EnquiryInput } from "@/lib/validations/schemas";
 
 export function EnquiryForm() {
   const [serverMessage, setServerMessage] = useState<string | null>(null);

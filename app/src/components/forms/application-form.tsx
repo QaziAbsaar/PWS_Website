@@ -8,7 +8,7 @@ import { submitApplication } from "@/app/actions/public";
 import {
   applicationSchema,
   type ApplicationInput,
-} from "@/lib/validation/schemas";
+} from "@/lib/validations/schemas";
 import { Field, inputClass } from "./enquiry-form";
 
 const CONNECTIONS = [

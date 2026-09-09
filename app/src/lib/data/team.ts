@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import type { SubmissionRow, TeamMemberRow } from "@/types/database";
+import type { SubmissionRow, TeamMemberRow } from "@/types/database.types";
 
 export async function getTeam(): Promise<TeamMemberRow[]> {
   const supabase = await createClient();

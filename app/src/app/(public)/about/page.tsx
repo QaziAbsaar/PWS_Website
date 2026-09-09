@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTeam } from "@/lib/data/team";
 import { initials, mediaUrl } from "@/lib/media";
-import { Callout, PageHero } from "@/components/site/sections";
+import { Callout, PageHero } from "@/components/public/sections";
 
 export const metadata: Metadata = {
   title: "About us",

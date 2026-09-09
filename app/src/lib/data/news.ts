@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import type { NewsRow } from "@/types/database";
+import type { NewsRow } from "@/types/database.types";
 
 export async function getPublishedNews(): Promise<NewsRow[]> {
   const supabase = await createClient();

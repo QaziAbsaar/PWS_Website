@@ -7,11 +7,12 @@ import { logout } from "@/app/actions/admin";
 
 const LINKS = [
   { href: "/admin", label: "Dashboard" },
-  { href: "/admin/submissions", label: "Submissions" },
+  { href: "/admin/messages", label: "Messages" },
   { href: "/admin/events", label: "Events" },
   { href: "/admin/news", label: "News" },
   { href: "/admin/gallery", label: "Gallery" },
   { href: "/admin/team", label: "Team" },
+  { href: "/admin/popup", label: "Popup & banner" },
 ];
 
 export function AdminNav({ email }: { email: string }) {

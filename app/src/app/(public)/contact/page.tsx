@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { EnquiryForm } from "@/components/forms/enquiry-form";
-import { PageHero } from "@/components/site/sections";
+import { PageHero } from "@/components/public/sections";
 
 export const metadata: Metadata = {
   title: "Contact",

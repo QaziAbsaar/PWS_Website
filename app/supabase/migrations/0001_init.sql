@@ -4,6 +4,20 @@
 create extension if not exists pgcrypto;
 
 -- ---------------------------------------------------------------------------
+-- Updated-at helper (referenced by triggers below — must exist first)
+-- ---------------------------------------------------------------------------
+
+create or replace function public.set_updated_at()
+returns trigger
+language plpgsql
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+-- ---------------------------------------------------------------------------
 -- Admin role
 -- ---------------------------------------------------------------------------
 
@@ -218,20 +232,6 @@ create policy "submissions: admin update"
   with check (public.is_admin());
 
 -- No delete policy: submissions are retained, only marked handled.
-
--- ---------------------------------------------------------------------------
--- Updated-at helper (referenced by triggers above)
--- ---------------------------------------------------------------------------
-
-create or replace function public.set_updated_at()
-returns trigger
-language plpgsql
-as $$
-begin
-  new.updated_at = now();
-  return new;
-end;
-$$;
 
 -- ---------------------------------------------------------------------------
 -- admins RLS (last, so is_admin exists)

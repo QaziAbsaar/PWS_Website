@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getPublishedEvents } from "@/lib/data/events";
 import { formatDate, mediaUrl } from "@/lib/media";
-import { Callout, PageHero } from "@/components/site/sections";
+import { Callout, PageHero } from "@/components/public/sections";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -65,16 +66,23 @@ export default async function EventsPage() {
                 return (
                   <article key={event.id} className="rule-item">
                     {image && (
-                      // eslint-disable-next-line @next/next/no-img-element -- Supabase storage
-                      <img
-                        src={image}
-                        alt={event.title}
-                        className="mb-6 aspect-video w-full rounded-lg object-cover"
-                        loading="lazy"
-                      />
+                      <Link href={`/events/${event.id}`} className="block">
+                        {/* eslint-disable-next-line @next/next/no-img-element -- Supabase storage */}
+                        <img
+                          src={image}
+                          alt={event.title}
+                          className="mb-6 aspect-video w-full rounded-lg object-cover"
+                          loading="lazy"
+                        />
+                      </Link>
                     )}
                     <h3 className="font-display text-2xl font-bold tracking-tight">
-                      {event.title}
+                      <Link
+                        href={`/events/${event.id}`}
+                        className="transition-colors hover:text-pws-green"
+                      >
+                        {event.title}
+                      </Link>
                     </h3>
                     <p className="mt-2 text-sm font-medium text-pws-green">
                       {formatDate(event.date)}

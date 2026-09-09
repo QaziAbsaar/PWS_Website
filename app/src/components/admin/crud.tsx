@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Trash2 } from "lucide-react";
-import type { ActionResult } from "@/types/database";
+import type { ActionResult } from "@/types/database.types";
 import { inputClass } from "@/components/forms/enquiry-form";
 
 export interface FieldSpec {

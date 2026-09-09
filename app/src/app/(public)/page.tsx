@@ -4,23 +4,30 @@ import { ButtonLink, TextLink } from "@/components/ui/links";
 export default function HomePage() {
   return (
     <>
-      {/* Hero — the one bold moment: full-bleed teal, the arc illustration. */}
+      {/* Hero — the one bold moment: full-bleed teal, animated arcs and
+          gathering dots. One orchestrated load sequence, then quiet. */}
       <section className="bg-pws-teal text-white">
         <div className="shell grid items-center gap-12 py-24 sm:py-32 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <h1 className="h-display mb-8 text-5xl sm:text-6xl lg:text-7xl">
+            <h1 className="h-display hero-rise mb-8 text-5xl sm:text-6xl lg:text-7xl">
               Care becomes
               <br />
               <em className="font-semibold">stronger</em> when
               <br />
               we act together.
             </h1>
-            <p className="mb-10 max-w-lg text-lg leading-relaxed text-white/80">
+            <p
+              className="hero-rise mb-10 max-w-lg text-lg leading-relaxed text-white/80"
+              style={{ animationDelay: "0.15s" }}
+            >
               We bring students together around practical care, social
               responsibility, and a shared belief: meaningful change begins
               with showing up.
             </p>
-            <div className="flex flex-wrap items-center gap-7">
+            <div
+              className="hero-rise flex flex-wrap items-center gap-7"
+              style={{ animationDelay: "0.3s" }}
+            >
               <ButtonLink href="/get-involved#pathways" variant="light">
                 Find your place
               </ButtonLink>
@@ -30,13 +37,17 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Arcs reach out and draw in; dots gather like people joining. */}
           <div
             className="relative hidden aspect-square lg:block"
             role="img"
-            aria-label="Abstract illustration of people joining hands"
+            aria-label="Animated illustration of arcs reaching out and people gathering around shared purpose"
           >
             <svg viewBox="0 0 480 480" aria-hidden="true" className="h-full w-full">
+              {/* Reach arcs — draw in, staggered */}
               <path
+                className="hero-draw"
+                style={{ "--dash": "540", animationDelay: "0.2s" } as React.CSSProperties}
                 d="M89 297c14 74 87 123 166 112 72-10 127-78 120-153"
                 fill="none"
                 stroke="#F2F4F2"
@@ -44,23 +55,43 @@ export default function HomePage() {
                 strokeWidth="2"
               />
               <path
+                className="hero-draw"
+                style={{ "--dash": "620", animationDelay: "0.5s" } as React.CSSProperties}
                 d="M97 172c34-66 119-93 189-60 62 29 95 100 75 166"
                 fill="none"
                 stroke="#4F9856"
                 strokeWidth="2.5"
               />
               <path
+                className="hero-draw"
+                style={{ "--dash": "420", animationDelay: "0.8s" } as React.CSSProperties}
                 d="M125 242c40 38 86 42 133 10 38-26 70-19 104 15"
                 fill="none"
                 stroke="#F2F4F2"
                 strokeOpacity="0.7"
                 strokeWidth="2"
               />
-              <circle cx="126" cy="242" r="10" fill="#4F9856" />
-              <circle cx="258" cy="252" r="10" fill="#F2F4F2" />
-              <circle cx="362" cy="267" r="10" fill="#4F9856" />
+
+              {/* Community dots — pop in, then drift gently.
+                  Drift wraps pop: the two transforms can't share an element. */}
+              <g className="hero-drift" style={{ animationDelay: "2s" }}>
+                <circle className="hero-pop" style={{ animationDelay: "1.2s" }} cx="126" cy="242" r="10" fill="#4F9856" />
+              </g>
+              <g className="hero-drift" style={{ animationDelay: "3.1s" }}>
+                <circle className="hero-pop" style={{ animationDelay: "1.35s" }} cx="258" cy="252" r="10" fill="#F2F4F2" />
+              </g>
+              <g className="hero-drift" style={{ animationDelay: "4.2s" }}>
+                <circle className="hero-pop" style={{ animationDelay: "1.5s" }} cx="362" cy="267" r="10" fill="#4F9856" />
+              </g>
+              {/* Two more join the circle */}
+              <g className="hero-drift" style={{ animationDelay: "5.3s" }}>
+                <circle className="hero-pop" style={{ animationDelay: "1.65s" }} cx="205" cy="135" r="7" fill="#F2F4F2" fillOpacity="0.8" />
+              </g>
+              <g className="hero-drift" style={{ animationDelay: "6.1s" }}>
+                <circle className="hero-pop" style={{ animationDelay: "1.8s" }} cx="318" cy="180" r="7" fill="#F2F4F2" fillOpacity="0.8" />
+              </g>
             </svg>
-            <p className="absolute bottom-2 right-6 font-display text-2xl font-semibold leading-snug">
+            <p className="hero-rise absolute bottom-2 right-6 font-display text-2xl font-semibold leading-snug" style={{ animationDelay: "1.9s" }}>
               Small actions.
               <br />
               <em>Shared purpose.</em>

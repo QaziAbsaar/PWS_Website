@@ -23,7 +23,7 @@ export default async function AdminDashboardPage() {
   const unhandled = submissions.filter((submission) => !submission.handled);
 
   const stats = [
-    { label: "New submissions", value: unhandled.length, href: "/admin/submissions" },
+    { label: "New submissions", value: unhandled.length, href: "/admin/messages" },
     { label: "Events", value: events.length, href: "/admin/events" },
     { label: "News posts", value: news.length, href: "/admin/news" },
     { label: "Gallery images", value: gallery.length, href: "/admin/gallery" },
@@ -60,7 +60,7 @@ export default async function AdminDashboardPage() {
             Recent submissions
           </h2>
           <Link
-            href="/admin/submissions"
+            href="/admin/messages"
             className="text-sm font-semibold text-pws-green hover:text-pws-teal"
           >
             View all →

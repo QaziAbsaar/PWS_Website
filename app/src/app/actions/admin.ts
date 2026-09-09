@@ -3,7 +3,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import type { ActionResult } from "@/types/database";
+import type { ActionResult } from "@/types/database.types";
 import { slugify } from "@/lib/media";
 
 export async function login(
@@ -243,6 +243,64 @@ export async function deleteTeamMember(id: string): Promise<ActionResult> {
 }
 
 // ---------------------------------------------------------------------------
+// Popup posters
+// ---------------------------------------------------------------------------
+
+export interface PopupInput {
+  id?: string;
+  title: string;
+  storage_path: string;
+  link_url: string;
+  active: boolean;
+}
+
+export async function savePopup(input: PopupInput): Promise<ActionResult> {
+  if (!input.storage_path.trim()) {
+    return { ok: false, message: "A storage path or URL is required." };
+  }
+  const supabase = await createClient();
+  const values = {
+    title: input.title.trim(),
+    storage_path: input.storage_path.trim(),
+    link_url: input.link_url.trim() || null,
+    active: input.active,
+  };
+
+  if (values.active) {
+    // Only one active poster at a time — activating this one deactivates all.
+    const { error: clearError } = await supabase
+      .from("popup_posters")
+      .update({ active: false })
+      .eq("active", true);
+    if (clearError) {
+      console.error("savePopup (clear):", clearError.message);
+      return { ok: false, message: "Could not clear the active poster." };
+    }
+  }
+
+  const { error } = input.id
+    ? await supabase.from("popup_posters").update(values).eq("id", input.id)
+    : await supabase.from("popup_posters").insert(values);
+
+  if (error) {
+    console.error("savePopup:", error.message);
+    return { ok: false, message: "Could not save the poster." };
+  }
+  revalidatePath("/", "layout");
+  return { ok: true };
+}
+
+export async function deletePopup(id: string): Promise<ActionResult> {
+  const supabase = await createClient();
+  const { error } = await supabase.from("popup_posters").delete().eq("id", id);
+  if (error) {
+    return { ok: false, message: "Could not delete the poster." };
+  }
+  revalidatePath("/", "layout");
+  return { ok: true };
+}
+
+// ---------------------------------------------------------------------------
 // Submissions
 // ---------------------------------------------------------------------------
 
@@ -259,6 +317,6 @@ export async function setSubmissionHandled(
     return { ok: false, message: "Could not update the submission." };
   }
   revalidatePath("/admin");
-  revalidatePath("/admin/submissions");
+  revalidatePath("/admin/messages");
   return { ok: true };
 }

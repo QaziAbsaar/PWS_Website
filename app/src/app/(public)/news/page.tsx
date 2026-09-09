@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getPublishedNews } from "@/lib/data/news";
 import { formatDate } from "@/lib/media";
-import { PageHero } from "@/components/site/sections";
+import { PageHero } from "@/components/public/sections";
 
 export const metadata: Metadata = {
   title: "News",
@@ -45,7 +46,12 @@ export default async function NewsPage() {
                     {formatDate(post.published_at)}
                   </p>
                   <h2 className="mt-3 font-display text-2xl font-bold tracking-tight sm:text-3xl">
-                    {post.title}
+                    <Link
+                      href={`/news/${post.slug}`}
+                      className="transition-colors hover:text-pws-green"
+                    >
+                      {post.title}
+                    </Link>
                   </h2>
                   {post.excerpt && (
                     <p className="mt-4 text-lg leading-relaxed text-charcoal/70">
@@ -53,11 +59,14 @@ export default async function NewsPage() {
                     </p>
                   )}
                   {post.body && (
-                    <div className="mt-5 space-y-4 text-base leading-relaxed text-charcoal/80">
-                      {post.body.split(/\n{2,}/).map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                      ))}
-                    </div>
+                    <p className="mt-4">
+                      <Link
+                        href={`/news/${post.slug}`}
+                        className="text-sm font-semibold text-pws-green underline underline-offset-2 hover:text-pws-teal"
+                      >
+                        Read the full post
+                      </Link>
+                    </p>
                   )}
                 </article>
               ))}

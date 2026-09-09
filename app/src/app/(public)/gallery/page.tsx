@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getPublishedGallery } from "@/lib/data/gallery";
 import { mediaUrl } from "@/lib/media";
-import { PageHero } from "@/components/site/sections";
+import { PageHero } from "@/components/public/sections";
 
 export const metadata: Metadata = {
   title: "Stories",

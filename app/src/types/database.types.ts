@@ -56,6 +56,16 @@ export interface TeamMemberRow {
 
 export type SubmissionKind = "enquiry" | "application";
 
+export interface PopupPosterRow {
+  id: string;
+  title: string;
+  storage_path: string;
+  link_url: string | null;
+  active: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface SubmissionRow {
   id: string;
   kind: SubmissionKind;

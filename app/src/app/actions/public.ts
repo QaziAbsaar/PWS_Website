@@ -1,8 +1,8 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { applicationSchema, enquirySchema } from "@/lib/validation/schemas";
-import type { ActionResult } from "@/types/database";
+import { applicationSchema, enquirySchema } from "@/lib/validations/schemas";
+import type { ActionResult } from "@/types/database.types";
 
 function zodToFieldErrors(error: { issues: { path: (string | number)[]; message: string }[] }) {
   const fieldErrors: Record<string, string> = {};

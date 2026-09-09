@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ApplicationForm } from "@/components/forms/application-form";
-import { PageHero } from "@/components/site/sections";
+import { PageHero } from "@/components/public/sections";
 
 export const metadata: Metadata = {
   title: "Get involved",
