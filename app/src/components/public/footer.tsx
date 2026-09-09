@@ -14,9 +14,14 @@ export function Footer() {
       <div className="shell grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Link href="/" className="flex items-center gap-3 no-underline" aria-label="Home">
-            <span className="grid h-10 w-10 -rotate-6 place-items-center rounded-full bg-pws-sage font-display text-xl font-bold text-white">
-              W
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element -- static logo, same size every render */}
+            <img
+              src="/logo.png"
+              alt=""
+              width={40}
+              height={40}
+              className="h-10 w-10 rounded-full object-cover"
+            />
             <span className="leading-none">
               <strong className="block font-display text-lg font-bold tracking-tight">
                 Welfare
