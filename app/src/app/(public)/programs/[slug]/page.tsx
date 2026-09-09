@@ -9,18 +9,24 @@ export function generateStaticParams() {
   return PROGRAMS.map((program) => ({ slug: program.slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: Params;
-}): Metadata {
-  const program = PROGRAMS.find((item) => item.slug === params.slug);
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const program = PROGRAMS.find((item) => item.slug === slug);
   if (!program) return { title: "Our work" };
   return { title: program.title, description: program.summary };
 }
 
-export default async function ProgramPage({ params }: { params: Params }) {
-  const program = PROGRAMS.find((item) => item.slug === params.slug);
+export default async function ProgramPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
+  const { slug } = await params;
+  const program = PROGRAMS.find((item) => item.slug === slug);
   if (!program) notFound();
 
   return (

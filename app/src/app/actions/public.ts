@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit } from "@/lib/rate-limit";
 import { applicationSchema, enquirySchema } from "@/lib/validations/schemas";
 import type { ActionResult } from "@/types/database.types";
 
@@ -13,6 +14,11 @@ function zodToFieldErrors(error: { issues: { path: (string | number)[]; message:
     }
   }
   return fieldErrors;
+}
+
+/** Derive a limiter key: email when provided, else the parsed input itself. */
+function limiterKey(parsed: { email: string }): string {
+  return `form:${parsed.email.toLowerCase()}`;
 }
 
 export async function submitEnquiry(
@@ -29,6 +35,14 @@ export async function submitEnquiry(
 
   // Honeypot tripped: pretend success, store nothing.
   if (parsed.data.company) return { ok: true };
+
+  const { allowed, retryAfterSeconds } = rateLimit(limiterKey(parsed.data));
+  if (!allowed) {
+    return {
+      ok: false,
+      message: `Too many messages sent. Please wait ${retryAfterSeconds} seconds and try again.`,
+    };
+  }
 
   const supabase = await createClient();
   const { error } = await supabase.from("submissions").insert({
@@ -64,6 +78,14 @@ export async function submitApplication(
   }
 
   if (parsed.data.company) return { ok: true };
+
+  const { allowed, retryAfterSeconds } = rateLimit(limiterKey(parsed.data));
+  if (!allowed) {
+    return {
+      ok: false,
+      message: `Too many applications sent. Please wait ${retryAfterSeconds} seconds and try again.`,
+    };
+  }
 
   const supabase = await createClient();
   const { error } = await supabase.from("submissions").insert({

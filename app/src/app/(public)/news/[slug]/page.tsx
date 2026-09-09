@@ -5,11 +5,6 @@ import { formatDate } from "@/lib/media";
 
 type Params = { slug: string };
 
-export async function generateStaticParams() {
-  const posts = await getPublishedNews();
-  return posts.map((post) => ({ slug: post.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: {
