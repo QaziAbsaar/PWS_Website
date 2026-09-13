@@ -31,9 +31,9 @@ export default function HomePage() {
               <ButtonLink href="/get-involved#pathways" variant="light">
                 Find your place
               </ButtonLink>
-              <TextLink href="/about" onDark>
+              <ButtonLink href="/about" variant="ghost">
                 Meet the Society
-              </TextLink>
+              </ButtonLink>
             </div>
           </div>
 

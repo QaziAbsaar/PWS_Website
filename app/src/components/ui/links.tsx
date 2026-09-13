@@ -1,11 +1,12 @@
 import Link from "next/link";
 
-type Variant = "dark" | "light" | "outline";
+type Variant = "dark" | "light" | "outline" | "ghost";
 
 const styles: Record<Variant, string> = {
   dark: "bg-pws-green text-white hover:bg-pws-teal",
   light: "bg-white text-pws-green hover:bg-off-white",
   outline: "border border-line bg-transparent text-charcoal hover:border-pws-sage",
+  ghost: "border border-white/70 bg-transparent text-white hover:border-white hover:bg-white/10",
 };
 
 export function ButtonLink({
