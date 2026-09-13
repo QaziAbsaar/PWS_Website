@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTeam } from "@/lib/data/team";
 import { initials, mediaUrl } from "@/lib/media";
+import { TEAM_GROUPS } from "@/lib/team-groups";
 import { Callout, PageHero } from "@/components/public/sections";
 
 export const metadata: Metadata = {
@@ -36,16 +37,40 @@ const VALUES = [
   },
 ];
 
+interface RosterMember {
+  name: string;
+  role: string;
+  photo: string | null;
+}
+
 export default async function AboutPage() {
   const team = await getTeam();
-  const roster =
-    team.length > 0
-      ? team.map((member) => ({
-          name: member.name,
-          role: member.role,
-          photo: mediaUrl(member.photo_path),
-        }))
-      : FALLBACK_TEAM.map((member) => ({ ...member, photo: null }));
+
+  // Group members by team, in the canonical group order.
+  const groups: { value: string; label: string; members: RosterMember[] }[] =
+    TEAM_GROUPS.map((group) => ({ ...group, members: [] }));
+
+  const addMember = (group: string, member: RosterMember) => {
+    const bucket = groups.find((item) => item.value === group);
+    if (bucket) bucket.members.push(member);
+  };
+
+  if (team.length > 0) {
+    for (const member of team) {
+      addMember(member.team_group, {
+        name: member.name,
+        role: member.role,
+        photo: mediaUrl(member.photo_path),
+      });
+    }
+  } else {
+    for (const member of FALLBACK_TEAM) {
+      addMember("executive-council", { ...member, photo: null });
+    }
+  }
+
+  const visibleGroups = groups.filter((group) => group.members.length > 0);
+  const hasAdvisors = groups.find((group) => group.value === "advisor")!.members.length > 0;
 
   return (
     <>
@@ -110,46 +135,55 @@ export default async function AboutPage() {
             </p>
           </div>
 
-          <div className="mb-10 flex items-center gap-5 border-t border-white/20 pt-10">
-            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white/10 font-display text-lg font-bold">
-              FH
-            </span>
-            <div>
-              <h3 className="font-display text-lg font-bold">Dr Fida Hussain</h3>
-              <p className="text-sm text-white/70">
-                Assistant Professor &amp; Advisor
-                <br />
-                Department of Chemical and Energy Engineering
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
-            {roster.map((member) => (
-              <div key={member.name} className="flex items-center gap-4">
-                {member.photo ? (
-                  // eslint-disable-next-line @next/next/no-img-element -- Supabase storage, not optimized by next/image without remote loader config
-                  <img
-                    src={member.photo}
-                    alt={`${member.name}, ${member.role}`}
-                    className="h-14 w-14 shrink-0 rounded-full object-cover"
-                    loading="lazy"
-                  />
-                ) : (
-                  <span
-                    aria-hidden="true"
-                    className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white/10 font-display text-lg font-bold"
-                  >
-                    {initials(member.name)}
-                  </span>
-                )}
-                <div>
-                  <h3 className="font-display text-base font-bold">{member.name}</h3>
-                  <p className="text-xs text-white/70">{member.role}</p>
-                </div>
+          {!hasAdvisors && (
+            <div className="mb-10 flex items-center gap-5 border-t border-white/20 pt-10">
+              <span className="grid h-[62px] w-[62px] shrink-0 place-items-center rounded-full bg-white/10 font-display text-lg font-bold">
+                FH
+              </span>
+              <div>
+                <h3 className="font-display text-lg font-bold">Dr Fida Hussain</h3>
+                <p className="text-sm text-white/70">
+                  Assistant Professor &amp; Advisor
+                  <br />
+                  Department of Chemical and Energy Engineering
+                </p>
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
+          {visibleGroups.map((group) => (
+            <div key={group.value} className="mb-12 last:mb-0">
+              <h3 className="mb-6 border-t border-white/20 pt-6 font-display text-xl font-bold">
+                {group.label}
+              </h3>
+              <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {group.members.map((member) => (
+                  <div key={member.name} className="flex items-center gap-4">
+                    {member.photo ? (
+                      // eslint-disable-next-line @next/next/no-img-element -- Supabase storage, not optimized by next/image without remote loader config
+                      <img
+                        src={member.photo}
+                        alt={`${member.name}, ${member.role}`}
+                        className="h-[62px] w-[62px] shrink-0 rounded-full object-contain"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span
+                        aria-hidden="true"
+                        className="grid h-[62px] w-[62px] shrink-0 place-items-center rounded-full bg-white/10 font-display text-lg font-bold"
+                      >
+                        {initials(member.name)}
+                      </span>
+                    )}
+                    <div>
+                      <h4 className="font-display text-base font-bold">{member.name}</h4>
+                      <p className="text-xs text-white/70">{member.role}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

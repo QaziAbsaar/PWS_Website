@@ -20,7 +20,7 @@ const config: Config = {
         display: ["var(--font-playfair)", "Georgia", "serif"],
       },
       maxWidth: {
-        shell: "1160px",
+        shell: "1440px",
       },
       letterSpacing: {
         eyebrow: "0.12em",

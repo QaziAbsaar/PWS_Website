@@ -202,6 +202,7 @@ export interface TeamInput {
   id?: string;
   name: string;
   role: string;
+  team_group: string;
   photo_path: string;
   sort_order: number;
 }
@@ -214,6 +215,7 @@ export async function saveTeamMember(input: TeamInput): Promise<ActionResult> {
   const values = {
     name: input.name.trim(),
     role: input.role.trim(),
+    team_group: input.team_group || "executive-council",
     photo_path: input.photo_path || null,
     sort_order: Number.isFinite(input.sort_order) ? input.sort_order : 0,
   };

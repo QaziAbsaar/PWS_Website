@@ -49,6 +49,7 @@ export interface TeamMemberRow {
   id: string;
   name: string;
   role: string;
+  team_group: string;
   photo_path: string | null;
   sort_order: number;
   created_at: string;

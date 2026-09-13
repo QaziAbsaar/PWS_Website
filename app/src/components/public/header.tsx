@@ -40,7 +40,7 @@ export function Header() {
         scrolled ? "border-line shadow-sm" : "border-transparent"
       }`}
     >
-      <div className="shell flex min-h-20 items-center gap-8">
+      <div className="flex min-h-20 items-center gap-8 px-6 sm:px-10">
         <Link
           href="/"
           aria-label="PAF-IAST Welfare Society home"
@@ -52,7 +52,7 @@ export function Header() {
             alt=""
             width={40}
             height={40}
-            className="h-10 w-10 rounded-full object-cover"
+            className="h-10 w-10 rounded-full object-contain"
           />
           <span className="leading-none">
             <strong className="block font-display text-lg font-bold tracking-tight text-charcoal">

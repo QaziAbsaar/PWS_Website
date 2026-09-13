@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTeam } from "@/lib/data/team";
 import { NewTeamForm, TeamEditor } from "@/components/admin/team-editor";
+import { teamGroupLabel } from "@/lib/team-groups";
 
 export const metadata: Metadata = {
   title: "Team",
@@ -31,6 +32,9 @@ export default async function AdminTeamPage() {
               <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-4 gap-y-1 px-6 py-4">
                 <strong className="text-sm">{member.name}</strong>
                 <span className="text-xs text-charcoal/50">{member.role}</span>
+                <span className="rounded-full bg-off-white px-2.5 py-1 text-xs text-charcoal/60">
+                  {teamGroupLabel(member.team_group)}
+                </span>
                 <span className="ml-auto text-xs text-charcoal/40">
                   #{member.sort_order}
                 </span>
@@ -41,6 +45,7 @@ export default async function AdminTeamPage() {
                   values={{
                     name: member.name,
                     role: member.role,
+                    team_group: member.team_group,
                     photo_path: member.photo_path ?? "",
                     sort_order: member.sort_order,
                   }}
